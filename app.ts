@@ -42,6 +42,10 @@ app.get("/scrape", async (req: Request, res: Response) => {
   }
 });
 
+app.use("/", async (req, res) => {
+  res.send("Hello world");
+});
+
 app.listen(PORT, () => {
   console.log("Listening on port", PORT);
 });
