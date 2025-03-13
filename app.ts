@@ -5,7 +5,7 @@ import chromium from "@sparticuz/chromium";
 
 const app = express();
 app.use(CORS());
-const PORT = process.env.PORT || 4000; // Corrected environment variable
+const PORT = 4000; // Corrected environment variable
 
 if (!PORT) {
   throw new Error("Please provide a valid port");

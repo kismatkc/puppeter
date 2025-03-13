@@ -1,12 +1,10 @@
-import dotenv from "dotenv";
 import express from "express";
 import CORS from "cors";
 import puppeteer from "puppeteer-core";
 import chromium from "@sparticuz/chromium";
-dotenv.config();
 const app = express();
 app.use(CORS());
-const PORT = process.env.PORT; // Corrected environment variable
+const PORT = 4000; // Corrected environment variable
 if (!PORT) {
     throw new Error("Please provide a valid port");
 }
