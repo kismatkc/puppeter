@@ -5,7 +5,7 @@ import puppeteer from "puppeteer";
 dotenv.config();
 const app = express();
 app.use(CORS());
-const PORT = process.env.PORT; // Corrected environment variable
+const PORT = process.env.PORT || 4000; // Corrected environment variable
 if (!PORT) {
   throw new Error("Please provide a valid port");
 }
