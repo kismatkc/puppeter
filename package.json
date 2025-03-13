@@ -11,16 +11,17 @@
   "author": "kismat kc",
   "license": "ISC",
   "dependencies": {
+    "@sparticuz/chromium": "^133.0.0",
     "cors": "^2.8.5",
-    "dotenv": "^16.4.7",
     "express": "^4.21.2",
-    "puppeteer": "^24.4.0",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.8.2"
+    "puppeteer-core": "^24.4.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
-    "nodemon": "^3.1.9"
+    "dotenv": "^16.4.7",
+    "nodemon": "^3.1.9",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.2"
   }
 }

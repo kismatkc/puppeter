@@ -1,7 +1,8 @@
 import dotenv from "dotenv";
 import express, { Request, Response } from "express";
 import CORS from "cors";
-import puppeteer from "puppeteer";
+import puppeteer from "puppeteer-core";
+import chromium from "@sparticuz/chromium";
 
 dotenv.config();
 
@@ -16,9 +17,11 @@ if (!PORT) {
 app.get("/scrape", async (req: Request, res: Response) => {
   try {
     const browser = await puppeteer.launch({
-      headless: true,
-      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+      args: chromium.args,
+      executablePath: await chromium.executablePath(),
+      headless: chromium.headless,
     });
+
     const page = await browser.newPage();
     await page.goto("https://www.ttc.ca/service-alerts", {
       waitUntil: "networkidle2",
