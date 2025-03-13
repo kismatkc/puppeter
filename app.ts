@@ -38,7 +38,7 @@ app.get("/scrape", async (req: Request, res: Response) => {
       data: alerts,
     });
   } catch (error) {
-    console.log(error);
+    res.status(200).json({ error });
   }
 });
 
