@@ -5,13 +5,14 @@ import chromium from "@sparticuz/chromium";
 const router = express.Router();
 
 async function getTtcAlerts(req: Request, res: Response) {
+  let browserInstance = null;
   try {
-    const browser = await puppeteer.launch({
+    browserInstance = await puppeteer.launch({
       args: chromium.args,
       executablePath: await chromium.executablePath(),
       headless: chromium.headless,
     });
-    const page = await browser.newPage();
+    const page = await browserInstance.newPage();
     await page.goto("https://www.ttc.ca/service-alerts", {
       waitUntil: "networkidle2",
     });
@@ -29,6 +30,14 @@ async function getTtcAlerts(req: Request, res: Response) {
     });
   } catch (error) {
     res.status(200).json({ error });
+  } finally {
+    if (browserInstance) {
+      try {
+        await browserInstance.close();
+      } catch (error) {
+        console.error("Error closing browser:", error);
+      }
+    }
   }
 }
 
