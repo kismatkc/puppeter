@@ -1,6 +1,7 @@
 import express from "express";
 import CORS from "cors";
 import getTtcAlerts from "./controllers/ttc-alert.ts";
+import getTtcTimes from "./controllers/ttc-times.ts";
 
 const app = express();
 app.use(CORS());
@@ -11,6 +12,7 @@ if (!PORT) {
 }
 
 app.use("/", getTtcAlerts);
+app.use("/", getTtcTimes);
 
 app.use("/", async (req, res) => {
   res.send("Hello world");
