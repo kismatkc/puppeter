@@ -28,5 +28,5 @@ async function getTtcAlerts(req, res) {
         res.status(200).json({ error });
     }
 }
-router.get("/scrape", getTtcAlerts);
+router.get("/scrape-news", getTtcAlerts);
 export default router;
