@@ -22,7 +22,7 @@ async function getTtcAlerts(req, res) {
             return liCollection;
         });
         res.json({
-            data: alerts,
+            data: alerts || [],
         });
     }
     catch (error) {

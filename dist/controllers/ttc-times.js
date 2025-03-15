@@ -1,7 +1,8 @@
 import express from "express";
 import axios from "axios";
+import { Redis } from "../reddis.js";
 const router = express.Router();
-const stops = ["4086", "409", "5243"];
+// const stops = ["4086", "409", "5243"];
 function getAllBusDetails(bus) {
     const data = bus.data.predictions;
     const filteredRoute = data?.length > 0
@@ -40,6 +41,8 @@ function getAllBusDetails(bus) {
 }
 async function fetchBusStops(req, res) {
     try {
+        const response = await Redis.get("stops");
+        const stops = JSON.parse(response);
         const responses = await Promise.allSettled(stops.map((stop) => axios.get(`http://webservices.nextbus.com/service/publicJSONFeed?command=predictions&a=ttc&stopId=${stop}`)));
         const filter = responses.filter((res) => res.status === "fulfilled");
         const upcomingBusDetails = filter.map((res) => {
@@ -48,7 +51,7 @@ async function fetchBusStops(req, res) {
             }
         });
         res.json({
-            data: upcomingBusDetails,
+            data: upcomingBusDetails || [],
         });
     }
     catch (error) {

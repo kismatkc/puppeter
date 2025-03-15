@@ -26,7 +26,7 @@ async function getTtcAlerts(req: Request, res: Response) {
       return liCollection;
     });
     res.json({
-      data: alerts,
+      data: alerts || [],
     });
   } catch (error) {
     res.status(200).json({ error });

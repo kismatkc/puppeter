@@ -1,9 +1,10 @@
 import express, { Request, Response } from "express";
 
 import axios from "axios";
+import { Redis } from "../reddis.ts";
 const router = express.Router();
 
-const stops = ["4086", "409", "5243"];
+// const stops = ["4086", "409", "5243"];
 function getAllBusDetails(bus) {
   const data = bus.data.predictions;
 
@@ -53,6 +54,9 @@ function getAllBusDetails(bus) {
 
 async function fetchBusStops(req: Request, res: Response) {
   try {
+    const response = await Redis.get("stops");
+    const stops = JSON.parse(response);
+
     const responses = await Promise.allSettled(
       stops.map((stop) =>
         axios.get(
@@ -68,7 +72,7 @@ async function fetchBusStops(req: Request, res: Response) {
       }
     });
     res.json({
-      data: upcomingBusDetails,
+      data: upcomingBusDetails || [],
     });
   } catch (error) {
     console.log(error);
