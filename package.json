@@ -6,7 +6,8 @@
   "main": "app.ts",
   "scripts": {
     "dev": "nodemon",
-    "build": "tsc -p tsconfig.build.json"
+    "build": "tsc -p tsconfig.build.json",
+    "fix": "node fix-imports.js"
   },
   "author": "kismat kc",
   "license": "ISC",
