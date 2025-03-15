@@ -7,7 +7,8 @@
   "scripts": {
     "dev": "nodemon",
     "build": "tsc -p tsconfig.build.json",
-    "fix": "node fix-imports.js"
+    "fix": "node fix-imports.js",
+    "test": "nodemon dist/app.js"
   },
   "author": "kismat kc",
   "license": "ISC",

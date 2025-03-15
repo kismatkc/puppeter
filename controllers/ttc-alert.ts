@@ -20,8 +20,8 @@ async function getTtcAlerts(req: Request, res: Response) {
       visible: true,
     });
     const alerts = await news?.evaluate((el) => {
-      const liCollection = Array.from(el.querySelectorAll("li")).map((item) =>
-        item.textContent?.trim()
+      const liCollection = Array.from(el.querySelectorAll("li")).map(
+        (item: any) => item.textContent?.trim()
       );
       return liCollection;
     });

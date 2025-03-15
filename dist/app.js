@@ -1,15 +1,18 @@
-import express from "express";
+import express, { json } from "express";
 import CORS from "cors";
 import getTtcAlerts from "./controllers/ttc-alert.js";
 import getTtcTimes from "./controllers/ttc-times.js";
+import modifyStops from "./controllers/modify-stops.js";
 const app = express();
 app.use(CORS());
+app.use(json());
 const PORT = 4000; // Corrected environment variable
 if (!PORT) {
     throw new Error("Please provide a valid port");
 }
 app.use("/", getTtcAlerts);
 app.use("/", getTtcTimes);
+app.use("/", modifyStops);
 app.use("/", async (req, res) => {
     res.send("Hello world");
 });

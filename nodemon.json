@@ -2,5 +2,5 @@
   "watch": ["."],
   "ext": "ts",
 
-  "exec": "node --loader ts-node/esm app.ts"
+  "exec": "TS_NODE_TRANSPILE_ONLY=true node --loader ts-node/esm app.ts"
 }
