@@ -51,7 +51,7 @@ async function fetchBusStops(req, res) {
             }
         });
         res.json({
-            data: upcomingBusDetails || [],
+            data: { times: upcomingBusDetails || [], stops: stops || "" },
         });
     }
     catch (error) {

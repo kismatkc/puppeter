@@ -72,7 +72,7 @@ async function fetchBusStops(req: Request, res: Response) {
       }
     });
     res.json({
-      data: upcomingBusDetails || [],
+      data: { times: upcomingBusDetails || [], stops: stops || "" },
     });
   } catch (error) {
     console.log(error);
