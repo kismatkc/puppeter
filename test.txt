@@ -1,0 +1,15 @@
+1. its a massive object 
+2. we have to get "Predications" value 
+3.Predication can be
+A.Object
+1. just select that object
+2. Select the direction array
+3.Loop over the direction array and collect all the predication keys inot one object
+4.Loop over the final object and grab seconds and title
+
+
+B.Array
+1.Map over all objects and find the ones which has "direction" key.
+2. Select the direction object
+3.select the direction array 
+4.Loop over the direction array and grab seconds and title

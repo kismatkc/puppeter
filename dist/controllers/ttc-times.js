@@ -2,38 +2,66 @@ import express from "express";
 import axios from "axios";
 import { Redis } from "../reddis.js";
 const router = express.Router();
-// const stops = ["4086", "409", "5243"];
 function getAllBusDetails(bus) {
-    const data = bus.data.predictions;
-    const filteredRoute = data?.length > 0
-        ? data.find((bus) => {
-            if (bus?.direction)
-                return bus;
-        })
-        : data;
+    // Handle the case where predictions is an object instead of an array
+    const predictionsData = bus.data.predictions;
+    let predictionsArray = [];
+    // Check if predictions is an array or a single object
+    if (Array.isArray(predictionsData)) {
+        predictionsArray = predictionsData;
+    }
+    else if (predictionsData && typeof predictionsData === "object") {
+        predictionsArray = [predictionsData];
+    }
+    // Find the first route with directions
+    const filteredRoute = predictionsArray.find((item) => item.direction) || {};
+    // Default structure for the output
     let upcomingBusDetails = {
-        routeTitle: "",
-        prediction: { time: null, branch: null },
+        routeTitle: filteredRoute.routeTitle || "",
+        prediction: [], // Default to empty array
     };
-    if (Array.isArray(filteredRoute.direction)) {
-        const final = filteredRoute.direction.reduce((acc, item) => {
-            const step1 = item.prediction;
-            return [...acc, ...step1];
-        }, []);
-        const filteredRouteTimings = final.map((bus) => {
-            return { time: bus?.seconds, branch: bus?.branch };
+    // If no direction data is found, return the default structure
+    if (!filteredRoute.direction) {
+        return upcomingBusDetails;
+    }
+    let directionData = filteredRoute.direction;
+    // Case 1: direction is an array of objects, each with a 'prediction' property
+    if (Array.isArray(directionData)) {
+        let allPredictions = [];
+        directionData.forEach((dir) => {
+            // Handle case where prediction is an object or an array
+            if (dir.prediction) {
+                const predictions = Array.isArray(dir.prediction)
+                    ? dir.prediction
+                    : [dir.prediction];
+                const formattedPredictions = predictions.map((p) => ({
+                    time: p?.seconds || null,
+                    branch: p?.branch || null,
+                }));
+                allPredictions = [...allPredictions, ...formattedPredictions];
+            }
         });
         upcomingBusDetails = {
-            routeTitle: filteredRoute.routeTitle,
-            prediction: filteredRouteTimings,
+            routeTitle: filteredRoute.routeTitle || "",
+            prediction: allPredictions,
         };
     }
-    else {
-        const filteredRouteTimings = filteredRoute.direction.prediction?.map((bus) => {
-            return { time: bus?.seconds, branch: bus?.branch };
-        });
+    // Case 2: direction is a single object with 'prediction' property
+    else if (directionData && typeof directionData === "object") {
+        // Handle case where prediction is an object or an array
+        const predictionData = directionData.prediction;
+        if (!predictionData) {
+            return upcomingBusDetails;
+        }
+        const predictionArray = Array.isArray(predictionData)
+            ? predictionData
+            : [predictionData];
+        const filteredRouteTimings = predictionArray.map((bus) => ({
+            time: bus?.seconds || null,
+            branch: bus?.branch || null,
+        }));
         upcomingBusDetails = {
-            routeTitle: filteredRoute.routeTitle,
+            routeTitle: filteredRoute.routeTitle || "",
             prediction: filteredRouteTimings,
         };
     }
@@ -42,14 +70,17 @@ function getAllBusDetails(bus) {
 async function fetchBusStops(req, res) {
     try {
         const response = await Redis.get("stops");
+        console.log(response);
         const stops = JSON.parse(response);
         const responses = await Promise.allSettled(stops.map((stop) => axios.get(`http://webservices.nextbus.com/service/publicJSONFeed?command=predictions&a=ttc&stopId=${stop}`)));
         const filter = responses.filter((res) => res.status === "fulfilled");
-        const upcomingBusDetails = filter.map((res) => {
+        const upcomingBusDetails = filter
+            .map((res) => {
             if (res.status === "fulfilled") {
                 return getAllBusDetails(res.value);
             }
-        });
+        })
+            .filter(Boolean); // Filter out any undefined values
         res.json({
             data: { times: upcomingBusDetails || [], stops: stops || "" },
         });
