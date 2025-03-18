@@ -3,7 +3,10 @@ import CORS from "cors";
 import getTtcAlerts from "./controllers/ttc-alert.ts";
 import getTtcTimes from "./controllers/ttc-times.ts";
 import modifyStops from "./controllers/modify-stops.ts";
+import weatherReport from "./controllers/weather-report.ts";
+import dotenv from "dotenv";
 
+dotenv.config();
 const app = express();
 app.use(CORS());
 app.use(json());
@@ -16,6 +19,7 @@ if (!PORT) {
 app.use("/", getTtcAlerts);
 app.use("/", getTtcTimes);
 app.use("/", modifyStops);
+app.use("/", weatherReport);
 
 app.use("/", async (req, res) => {
   res.send("Hello world");

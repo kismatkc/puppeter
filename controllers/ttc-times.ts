@@ -103,7 +103,7 @@ async function fetchBusStops(req: Request, res: Response) {
       })
       .filter(Boolean); // Filter out any undefined values
 
-    res.json({
+    res.status(200).json({
       data: { times: upcomingBusDetails || [], stops: stops || "" },
     });
   } catch (error) {
