@@ -4,6 +4,7 @@ import getTtcAlerts from "./controllers/ttc-alert.js";
 import getTtcTimes from "./controllers/ttc-times.js";
 import modifyStops from "./controllers/modify-stops.js";
 import weatherReport from "./controllers/weather-report.js";
+import wordBreakdown from "./controllers/word-breakdown.js";
 import dotenv from "dotenv";
 dotenv.config();
 const app = express();
@@ -17,6 +18,7 @@ app.use("/", getTtcAlerts);
 app.use("/", getTtcTimes);
 app.use("/", modifyStops);
 app.use("/", weatherReport);
+app.use("/", wordBreakdown);
 app.use("/", async (req, res) => {
     res.send("Hello world");
 });
