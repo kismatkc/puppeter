@@ -5,9 +5,12 @@ import getTtcTimes from "./controllers/ttc-times.ts";
 import modifyStops from "./controllers/modify-stops.ts";
 import weatherReport from "./controllers/weather-report.ts";
 import wordBreakdown from "./controllers/word-breakdown.ts";
+import getMp3 from "./controllers/get-mp3.ts";
+import streaks from "./controllers/streaks.ts";
 import dotenv from "dotenv";
 
 dotenv.config();
+
 const app = express();
 app.use(CORS());
 app.use(json());
@@ -22,6 +25,8 @@ app.use("/", getTtcTimes);
 app.use("/", modifyStops);
 app.use("/", weatherReport);
 app.use("/", wordBreakdown);
+app.use("/", getMp3);
+app.use("/", streaks);
 
 app.use("/", async (req, res) => {
   res.send("Hello world");

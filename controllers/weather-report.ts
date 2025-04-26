@@ -24,8 +24,6 @@ interface result {
 }
 
 async function getWeatherData(lat: number, lon: number): Promise<result> {
-  console.log("fired");
-
   const OPENWEATHER_API = process.env.OPENWEATHER_API;
 
   const urlForWeather = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&appid=${OPENWEATHER_API}&units=metric`;
