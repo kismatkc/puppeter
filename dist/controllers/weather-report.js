@@ -5,7 +5,6 @@ function roundValue(value) {
     return `${value > 0 ? Math.ceil(value) : Math.floor(value)}\u00B0`;
 }
 async function getWeatherData(lat, lon) {
-    console.log("fired");
     const OPENWEATHER_API = process.env.OPENWEATHER_API;
     const urlForWeather = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&appid=${OPENWEATHER_API}&units=metric`;
     const urlForAddress = `http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=1&appid=${OPENWEATHER_API}`;
