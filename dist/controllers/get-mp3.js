@@ -16,7 +16,7 @@ const appwriteApiKey = process.env.APPWRITE_API_KEY ||
     "standard_17844b2057d31a53694f426cdeaa3bd048df2a8e9f16f1d0a20ac41aeb231baf1198843cc4538a53296b2af451a12a0bdc78ccb6c78872e1a34265dfa8d44ce3d1b6569375d277c8b0adc81a4de3feedc81492bf6824e49ba82a9c0ab10fd36ac5ac4a8aef525ed125bc8fb21a9aec28b4b86031e8ce7d92c094792bef22958a";
 const bucketId = process.env.APPWRITE_MUSIC_BUCKETNAME || "6801777c0003a97d6c14";
 // Temporary directory setup
-const tempDir = path.join(__dirname, "../temp");
+const tempDir = "/tmp/mp3-converter";
 // Ensure temp directory exists
 if (!fs.existsSync(tempDir)) {
     fs.mkdirSync(tempDir, { recursive: true });

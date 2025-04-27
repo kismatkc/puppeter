@@ -23,8 +23,7 @@ const bucketId =
   process.env.APPWRITE_MUSIC_BUCKETNAME || "6801777c0003a97d6c14";
 
 // Temporary directory setup
-const tempDir = path.join(__dirname, "../temp");
-
+const tempDir = "/tmp/mp3-converter";
 // Ensure temp directory exists
 if (!fs.existsSync(tempDir)) {
   fs.mkdirSync(tempDir, { recursive: true });
