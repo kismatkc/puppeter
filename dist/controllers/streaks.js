@@ -2,6 +2,8 @@ import express from "express";
 import { Redis } from "../reddis.js";
 const router = express.Router();
 async function deleteSuccessLists(activity) {
+  console.log("fired");
+
   // Returns the number of keys removed (0 or 1)
   return await Redis.del(`activity:${activity}:successful`);
 }
