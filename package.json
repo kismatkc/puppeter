@@ -13,7 +13,7 @@
   "author": "kismat kc",
   "license": "ISC",
   "dependencies": {
-    "@distube/ytdl-core": "^4.16.8",
+    "@distube/ytdl-core": "^4.16.10",
     "@sparticuz/chromium": "^133.0.0",
     "axios": "^1.8.4",
     "cors": "^2.8.5",

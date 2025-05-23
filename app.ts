@@ -7,6 +7,7 @@ import weatherReport from "./controllers/weather-report.ts";
 import wordBreakdown from "./controllers/word-breakdown.ts";
 import getMp3 from "./controllers/get-mp3.ts";
 import streaks from "./controllers/streaks.ts";
+import getMp3BUffer from "./controllers/get-mp3-buffer.ts";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -27,6 +28,7 @@ app.use("/", weatherReport);
 app.use("/", wordBreakdown);
 app.use("/", getMp3);
 app.use("/", streaks);
+app.use("/", getMp3BUffer);
 
 app.use("/", async (req, res) => {
   res.send("Hello world");
